@@ -1,6 +1,8 @@
 package com.zdbz.trucknavi
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -11,7 +13,9 @@ import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -37,6 +41,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var naviController: NaviController
     private var locationClient: AMapLocationClient? = null
+
+    // 运行时定位权限申请（Android 6+ 必须，否则高德拿不到定位）
+    private val locationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grants ->
+            val granted = (grants[Manifest.permission.ACCESS_FINE_LOCATION]
+                ?: grants[Manifest.permission.ACCESS_COARSE_LOCATION]) == true
+            if (granted) {
+                startLocationOnce()
+            } else {
+                toast("定位权限被拒绝，请在系统设置中开启定位权限后点「重新定位」")
+            }
+        }
 
     private var startLatLng: NaviLatLng? = null
     private var endLatLng: NaviLatLng? = null
@@ -120,6 +136,23 @@ class MainActivity : AppCompatActivity() {
 
     // ---------------- 定位 ----------------
     private fun requestLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            startLocationOnce()
+        } else {
+            locationPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    private fun startLocationOnce() {
+        // 复用旧 client，避免重复创建
+        locationClient?.onDestroy()
         try {
             val client = AMapLocationClient(this)
             locationClient = client
@@ -137,14 +170,17 @@ class MainActivity : AppCompatActivity() {
 
     private val locationListener = AMapLocationListener { location ->
         if (location == null) return@AMapLocationListener
-        if (location.errorCode == 0) {
-            val ll = NaviLatLng(location.latitude, location.longitude)
-            startLatLng = ll
-            val addr = location.address ?: ""
-            tvStart.text = if (addr.isBlank()) "起点：${fmt(ll)}" else "起点：$addr"
-            drawStart()
-        } else {
-            toast("定位失败(${location.errorCode})：${location.description}")
+        // 高德定位回调可能在子线程，切回主线程更新 UI
+        runOnUiThread {
+            if (location.errorCode == 0) {
+                val ll = NaviLatLng(location.latitude, location.longitude)
+                startLatLng = ll
+                val addr = location.address ?: ""
+                tvStart.text = if (addr.isBlank()) "起点：${fmt(ll)}" else "起点：$addr"
+                drawStart()
+            } else {
+                toast("定位失败(${location.errorCode})：${location.description}")
+            }
         }
     }
 

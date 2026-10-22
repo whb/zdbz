@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  高德 SDK（搜索/导航/定位）部分请求走 http://，而 Android 9+（targetSdk>=28）
+  默认禁止明文流量，会导致 "http 或 socket连接失败"。
+  此处显式放行明文流量，保证 SDK 网络请求可用。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
