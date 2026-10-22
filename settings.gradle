@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        // 阿里镜像（gradle 插件 + google + 公共），最后回退官方
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        // 阿里镜像
+        maven { url 'https://maven.aliyun.com/repository/public' }   // central + jcenter
+        maven { url 'https://maven.aliyun.com/repository/google' }   // androidx / google
+        maven { url 'https://maven.aliyun.com/repository/central' }  // Maven Central（高德等）
+    }
+}
+
+rootProject.name = "TruckNavi"
+include ':app'

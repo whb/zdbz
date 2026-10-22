@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============================================================
+         高德地图 Key 配置
+         请把你申请的高德 Key 填入 amap_key 的值中。
+         - 在高德开放平台控制台创建「Android 平台 SDK」类型的 Key
+         - Key 需绑定本应用包名 com.zdbz.trucknavi 与签名 SHA1
+         - 货车导航为收费能力，需先在控制台开通货车算路服务
+         该值被 AndroidManifest 的 com.amap.api.v2.apikey 引用。
+         ============================================================ -->
+    <string name="amap_key" translatable="false">ffcbd0c0b9677edf36d0ea64fca7a761</string>
+</resources>

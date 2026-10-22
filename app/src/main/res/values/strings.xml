@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">货车导航</string>
+    <string name="hint_keyword">输入目的地（地名 / 地址）</string>
+    <string name="btn_search">搜索</string>
+    <string name="btn_locate">定位</string>
+    <string name="tv_start_default">起点：定位中…</string>
+    <string name="tv_dest_default">终点：未设置</string>
+    <string name="btn_truck_param">货车参数</string>
+    <string name="btn_start">开始导航</string>
+    <string name="btn_stop">结束导航</string>
+    <string name="real_navi">实时导航</string>
+    <string name="sim_navi">模拟导航</string>
+    <string name="truck_title">货车参数（用于货车算路）</string>
+    <string name="plate">车牌号</string>
+    <string name="plate_hint">如：京A12345</string>
+    <string name="car_size">车型</string>
+    <string name="vehicle_length">长度(米)</string>
+    <string name="vehicle_width">宽度(米)</string>
+    <string name="vehicle_height">高度(米)</string>
+    <string name="vehicle_weight">核定载重(吨)</string>
+    <string name="vehicle_load">总重(吨)</string>
+    <string name="vehicle_axis">轴数</string>
+    <string name="avoid_restrict">躲避限行</string>
+    <string name="load_switch">载重参与算路</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="size_1">微型货车</string>
+    <string name="size_2">轻型/小型货车</string>
+    <string name="size_3">中型货车</string>
+    <string name="size_4">重型货车</string>
+    <string name="toast_no_dest">请先设置终点</string>
+    <string name="toast_no_start">起点定位失败，请重试</string>
+    <string name="toast_route_fail">算路失败，错误码：%1$d</string>
+    <string name="toast_picking">正在定位…</string>
+</resources>

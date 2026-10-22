@@ -1,0 +1,5 @@
+// 根项目 —— 仅声明插件版本
+// Gradle 9.8.2 对应 AGP 9.4（最低 Gradle 9.6.0）
+plugins {
+    id 'com.android.application' version '9.4.0' apply false
+}

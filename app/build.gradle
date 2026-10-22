@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.zdbz.trucknavi'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.zdbz.trucknavi"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        // 高德 SDK 仅提供 armeabi-v7a / arm64-v8a 的 .so，无 x86（模拟器需 ARM 镜像）
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+
+    // 高德合包：导航(Navi) + 3D地图(map3d) + 定位(location) + 搜索(search)
+    // 版本说明：10.1.201(nav+map) / loc 6.4.9 / sea 9.7.4，来源 Maven Central
+    implementation 'com.amap.api:navi-3dmap-location-search:10.1.201_3dmap10.1.201_loc6.4.9_sea9.7.4'
+}
